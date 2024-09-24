@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="style.css" />
 
     <!-- Scripts -->
-    <script src="logic.js" defer></script>
+    <!-- <script src="logic.js" defer></script> -->
+    <script src="addDestination.js" type="module"></script>
+    <script src="getAllDestinations.js" defer></script>
 
 
     <title>Travel destination</title>
@@ -22,15 +24,15 @@
     </header>
     <main class="index">
       <div class="travelContainer">
-        <div id="travelImg">
+        <div class="travelImg">
           <img src="./images/London.jpg" alt="" />
         </div>
         <div class="destinationContent">
           <div class="travelContainerHeader">
-            <p id="city">London</p>
-            <p id="date">22/04-23</p>
+            <p class="city">London</p>
+            <p class="date">22/04-23</p>
           </div>
-          <div id="description">
+          <div class="description">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -42,7 +44,7 @@
             </p>
           </div>
           <div class="deleteButtonGroup">
-            <p id="deleteButton">Delete</p>
+            <p class="deleteButton">Delete</p>
             <div id="confirmDelete">
               <p>Are you sure?</p>
               <button id="delete">Yes</button>
@@ -51,6 +53,15 @@
           </div>
         </div>
       </div>
+      <form>
+        <label for="City">City</label>
+        <input id="city" type="text">
+        <label for="Country">Country</label>
+        <input id="country" type="text">
+        <label for="description">Description</label>
+        <input id="description" type="text">
+        <button id="addDestination">Submit</button>
+      </form>
     </main>
   </body>
 </html>

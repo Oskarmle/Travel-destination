@@ -85,17 +85,17 @@ button:hover {
   gap: 8px;
 }
 
-#city {
+.city {
   font-size: 25px;
   color: var(--primaryColor);
 }
 
-#date {
+.date {
   padding-bottom: 2px;
   color: var(--primaryColor);
 }
 
-#travelImg {
+.travelImg {
   height: 100%;
   max-width: 400px;
   border-radius: 10px;
@@ -104,7 +104,7 @@ button:hover {
   align-self: center;
 }
 
-#travelImg img {
+.travelImg img {
   width: 100%;
   align-self: center;
 }
@@ -115,7 +115,7 @@ button:hover {
   justify-content: space-between;
 }
 
-.deleteButtonGroup{
+#deleteButtonGroup{
     height: 30px;
     display: flex;
     align-items: center;
