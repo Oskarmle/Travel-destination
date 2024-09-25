@@ -115,20 +115,20 @@ button:hover {
   justify-content: space-between;
 }
 
-#deleteButtonGroup{
-    height: 30px;
-    display: flex;
-    align-items: center;
+.deleteButtonGroup {
+  height: 30px;
+  display: flex;
+  align-items: center;
 }
 
-#deleteButton {
+.deleteButton {
   color: var(--deleteCancelColor);
   text-decoration: underline;
   text-decoration-color: var(--deleteColor);
   cursor: pointer;
 }
 
-#confirmDelete {
+.confirmDelete {
   display: none;
   justify-content: center;
   align-items: center;
@@ -137,12 +137,12 @@ button:hover {
   color: black;
 }
 
-#delete{
-    background: var(--deleteCancelColor);
+.delete {
+  background: var(--deleteCancelColor);
 }
 
-#delete:hover{
-    background: var(--deleteCancelColorHover);
+.delete:hover {
+  background: var(--deleteCancelColorHover);
 }
 
 /******************* Signup styling *******************/

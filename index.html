@@ -21,7 +21,19 @@
         <button>Sign up</button>
       </a>
     </header>
-    <main class="index">
+    <main id="main" class="index">
+      <form>
+        <label for="City">City</label>
+        <input id="city" type="text" />
+        <label for="Country">Country</label>
+        <input id="country" type="text" />
+        <label for="description">Description</label>
+        <input id="description" type="text" />
+        <button id="addDestination">Submit</button>
+      </form>
+    </main>
+
+    <template id="destinationTemplate">
       <div class="travelContainer">
         <div class="travelImg">
           <img src="./images/London.jpg" alt="" />
@@ -44,29 +56,14 @@
           </div>
           <div class="deleteButtonGroup">
             <p class="deleteButton">Delete</p>
-            <div id="confirmDelete">
+            <div class="confirmDelete">
               <p>Are you sure?</p>
-              <button id="delete">Yes</button>
-              <button id="canceDelete">Cancel</button>
+              <button class="delete">Yes</button>
+              <button class="canceDelete">Cancel</button>
             </div>
           </div>
         </div>
       </div>
-
-      <form>
-        <label for="City">City</label>
-        <input id="city" type="text" />
-        <label for="Country">Country</label>
-        <input id="country" type="text" />
-        <label for="description">Description</label>
-        <input id="description" type="text" />
-        <button id="addDestination">Submit</button>
-      </form>
-      <div id="destinationTest"></div>
-      <template id="destinationTemplate">
-        <p class="destinationCity">CITY</p>
-        <p class="destinationCountry">COUNTRY</p>
-      </template>
-    </main>
+    </template>
   </body>
 </html>

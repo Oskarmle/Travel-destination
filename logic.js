@@ -1,6 +1,6 @@
-// const deleteButtonPopUp = document.getElementById("deleteButton");
-// const cancelDelete = document.getElementById("canceDelete");
-// const confirmDeleteBox = document.getElementById("confirmDelete");
+//const deleteButtonPopUp = document.querySelector(".deleteButton");
+// const cancelDelete = document.querySelector(".canceDelete");
+// const confirmDeleteBox = document.querySelector(".confirmDelete");
 
 // deleteButtonPopUp.addEventListener("click", function () {
 //   if (confirmDeleteBox.style.display !== "flex") {
@@ -29,10 +29,15 @@ window.addEventListener("load", async () => {
     let template = document.getElementById("destinationTemplate");
     let clone = template.content.cloneNode(true);
 
-    clone.querySelector(".destinationCity").textContent = destination.city;
-    clone.querySelector(".destinationCountry").textContent =
-      destination.country;
-
-    document.getElementById("destinationTest").appendChild(clone);
+    clone.querySelector(".city").textContent = destination.city;
+    clone.querySelector(".description").textContent = destination.country;
+    clone
+      .querySelector(".deleteButton")
+      .addEventListener("click", () => deleteDestination(destination._id));
+    document.getElementById("main").appendChild(clone);
   });
 });
+
+function deleteDestination(id) {
+  console.log("Delete destination with this ID", id);
+}
