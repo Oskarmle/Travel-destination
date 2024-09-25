@@ -7,10 +7,9 @@
     <link rel="stylesheet" href="style.css" />
 
     <!-- Scripts -->
-    <!-- <script src="logic.js" defer></script> -->
+    <script src="logic.js" defer type="module"></script>
     <script src="addDestination.js" type="module"></script>
-    <script src="getAllDestinations.js" defer></script>
-
+    <script src="getAllDestinations.js" defer type="module"></script>
 
     <title>Travel destination</title>
   </head>
@@ -53,15 +52,21 @@
           </div>
         </div>
       </div>
+
       <form>
         <label for="City">City</label>
-        <input id="city" type="text">
+        <input id="city" type="text" />
         <label for="Country">Country</label>
-        <input id="country" type="text">
+        <input id="country" type="text" />
         <label for="description">Description</label>
-        <input id="description" type="text">
+        <input id="description" type="text" />
         <button id="addDestination">Submit</button>
       </form>
+      <div id="destinationTest"></div>
+      <template id="destinationTemplate">
+        <p class="destinationCity">CITY</p>
+        <p class="destinationCountry">COUNTRY</p>
+      </template>
     </main>
   </body>
 </html>
