@@ -9,21 +9,29 @@ let passwordCheck = document.getElementById("passwordCheck");
 const submitUser = document.getElementById("submitUser");
 
 // Creates a object with the class User.js
-let addNewUser = () => {
+let addNewUser = async () => {
   const newFirstname = firstname.value;
   const newLastname = lastname.value;
   const newEmail = email.value;
   const newPassword = password.value;
   const newPasswordCheck = passwordCheck.value;
+  const allUserEmails = await getUserEmails();
+  // console.log(allUserEmails);
 
+  // Check if both password inputs is the same
   if (newPassword !== newPasswordCheck) {
     alert(`The passwords are not the same, try again`);
-  } else {
-    const user1 = new User(newFirstname, newLastname, newEmail, newPassword);
-    // console.log("the passwords are correct");
-    // console.log(`Created the user object`, JSON.stringify(user1));
-    saveUser(user1);
+    return;
   }
+
+  // Check if the email from the input field is already in use
+  if (allUserEmails.some((user) => user.email === newEmail)) {
+    alert(`The email is already in use`);
+    return;
+  }
+
+  const user1 = new User(newFirstname, newLastname, newEmail, newPassword);
+  saveUser(user1);
 };
 
 // function to register submit click
@@ -70,10 +78,3 @@ async function getUserEmails() {
     console.error(error);
   }
 }
-
-window.addEventListener("load", async () => {
-  const allUserEmails = await getUserEmails();
-  console.log(allUserEmails);
-  
-});
-
