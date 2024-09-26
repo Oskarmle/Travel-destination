@@ -30,6 +30,7 @@ let addNewUser = async () => {
     return;
   }
 
+  // Save a new user and POST
   const user1 = new User(newFirstname, newLastname, newEmail, newPassword);
   saveUser(user1);
 };
