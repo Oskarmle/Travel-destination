@@ -6,7 +6,8 @@
     <!-- Stylesheet link -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Scripts -->
+    <!-- User scripts -->
+    <script type="module" src="userLogic.js"></script>
 
     <title>Sign up</title>
   </head>
@@ -25,26 +26,26 @@
         <div class="name">
           <div class="firstname formContent">
             <label for="firstName">Firstname</label>
-            <input type="text" id="firstName" placeholder="Firstname" />
+            <input type="text" id="firstname" placeholder="Firstname" />
           </div>
           <div class="lastname formContent">
             <label for="lastName">lastname</label>
-            <input type="text" id="lastName" placeholder="Lastname" />
+            <input type="text" id="lastname" placeholder="Lastname" />
           </div>
         </div>
         <div class="email formContent">
           <label for="email">E-mail</label>
-          <input type="text" id="lastName" placeholder="E-mail" />
+          <input type="text" id="email" placeholder="E-mail" />
         </div>
         <div class="password formContent">
           <label for="password">Password</label>
-          <input type="password" id="lastName" placeholder="Password" />
+          <input type="password" id="password" placeholder="Password" />
         </div>
         <div class="repPassword formContent">
           <label for="email">Repeat password</label>
-          <input type="password" id="lastName" placeholder="Password" />
+          <input type="password" id="passwordCheck" placeholder="Password" />
         </div>
-        <button type="submit">Signup</button>
+        <button type="submit" id="submitUser">Signup</button>
       </form>
     </main>
   </body>
