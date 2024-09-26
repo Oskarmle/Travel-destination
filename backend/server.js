@@ -19,6 +19,8 @@ const client = new MongoClient(uri, {
   },
 });
 
+///////////////////////////////////////// Destination routes /////////////////////////////////////////
+
 // Post request for destinations
 app.post("/destinations", async (req, res) => {
   console.log(req.body);
@@ -70,28 +72,15 @@ app.post("/users", async (req, res) => {
   res.send("Got a POST request");
 });
 
-// Get request for users
+// Get request for user emails
 app.get("/users", async (req, res) => {
   try {
-    const users = await getAllUsers();
-    res.json(users);
+    const userEmails = await getEmails(req.params.filter);
+    res.json(userEmails);
   } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ message: "Failed to fetch users" });
+    console.error("Error fetching user Emails:", error);
+    res.status(500).json({ message: "Failed to fetch user emails" });
   }
-});
-
-// Delete request for users
-app.delete("/users/:id", async (req, res) => {
-  console.log("delete user with this id", req.params.id);
-  await deleteUser(req.params.id);
-  res.send("Got a DELETE request at /users/:id");
-});
-
-// Put request for users
-app.put("/users/:id", (req, res) => {
-  console.log("params", req.params);
-  res.send("This is a put request!");
 });
 
 // Start the server
@@ -99,7 +88,9 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-// Helper functions
+///////////////////////////////////////// Functions /////////////////////////////////////////
+
+// Create new destination functions
 async function createDestination(newDestination) {
   try {
     await client.connect();
@@ -114,6 +105,7 @@ async function createDestination(newDestination) {
   }
 }
 
+// Get all destinations
 async function getAllDestinations() {
   try {
     await client.connect();
@@ -127,6 +119,7 @@ async function getAllDestinations() {
   }
 }
 
+// Get filtered destinations based on Country
 async function getFilteredDestinations(filter) {
   try {
     await client.connect();
@@ -140,6 +133,7 @@ async function getFilteredDestinations(filter) {
   }
 }
 
+// Delete a destination
 async function deleteDestination(destinationId) {
   try {
     await client.connect();
@@ -165,7 +159,7 @@ async function deleteDestination(destinationId) {
   }
 }
 
-// User functions
+// Creates a new user
 async function createUser(newUser) {
   try {
     await client.connect();
@@ -186,39 +180,17 @@ async function createUser(newUser) {
   }
 }
 
-async function getAllUsers() {
+// Get filtered user emails
+async function getEmails() {
   try {
     await client.connect();
     const myDB = client.db("travel");
     const myColl = myDB.collection("users");
 
-    const users = await myColl.find({}).toArray();
-    return users;
-  } finally {
-    await client.close();
-  }
-}
-
-async function deleteUser(userId) {
-  try {
-    await client.connect();
-    const myDB = client.db("travel");
-    const myColl = myDB.collection("users");
-
-    const query = {
-      _id: ObjectId.isValid(userId) ? new ObjectId(userId) : null,
-    };
-
-    if (!query._id) {
-      console.log("Invalid ObjectId format.");
-      return; // Exit early if the ID is not valid
-    }
-    const result = await myColl.deleteOne(query);
-    if (result.deletedCount === 1) {
-      console.log("Successfully deleted user with the ID", query);
-    } else {
-      console.log("No documents matched the query. Deleted 0 documents.");
-    }
+    const userEmails = await myColl.find({}, { projection: { email: 1, _id: 1 } }).toArray();
+    console.log(userEmails);
+    return userEmails;
+    
   } finally {
     await client.close();
   }

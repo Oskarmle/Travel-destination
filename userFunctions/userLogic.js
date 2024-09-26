@@ -53,3 +53,27 @@ async function saveUser(user1) {
     console.error(error);
   }
 }
+
+// Get user emails to check against new user emails
+async function getUserEmails() {
+  const url = "http://127.0.0.1:3003/users";
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const userEmails = await response.json();
+    return userEmails;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+window.addEventListener("load", async () => {
+  const allUserEmails = await getUserEmails();
+  console.log(allUserEmails);
+  
+});
+
