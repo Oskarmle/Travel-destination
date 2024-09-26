@@ -14,14 +14,14 @@
     <title>Travel destination</title>
   </head>
   <body>
-    <header class="container">
+    <header class="headerContainer">
       <button>Login</button>
-      <h1>Travel destinations</h1>
       <a href="signup.html">
         <button>Sign up</button>
       </a>
     </header>
     <main id="main" class="index">
+      <h1>Travel destinations</h1>
       <form>
         <label for="City">City</label>
         <input id="city" type="text" />
@@ -29,13 +29,21 @@
         <input id="country" type="text" />
         <label for="description">Description</label>
         <input id="description" type="text" />
+
         <button id="addDestination">Submit</button>
       </form>
 
-      <label for="dropdown">Choose a country</label>
-      <select id="dropdown"></select>
+      <div class="filterMenu">
+        <label for="dropdown">Choose a country</label>
+        <select id="dropdown">
+          <option value="">Choose a country</option>
+        </select>
+      </div>
 
-      <template><option>France</option></template>
+      <template id="dropdownTemplate"
+        ><option class="filterOption" value="">France</option></template
+      >
+      <div id="destinationsContainer"></div>
     </main>
 
     <template id="destinationTemplate">
@@ -48,6 +56,7 @@
             <p class="city">London</p>
             <p class="date">22/04-23</p>
           </div>
+          <p class="country">UK</p>
           <div class="description">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

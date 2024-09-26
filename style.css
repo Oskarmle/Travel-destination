@@ -17,12 +17,13 @@
 
 /******************* Background *******************/
 body {
-  width: 100vw;
+  /* width: 100vw;
   height: 100vh;
-  z-index: 0;
-  display: flex;
+  z-index: 0; */
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
+  scroll-behavior: smooth;
   background: rgb(208, 200, 255);
   background: radial-gradient(
     circle,
@@ -34,12 +35,12 @@ body {
 
 /******************* Primary styling *******************/
 header {
-  width: 95vw;
   height: 80px;
   display: flex;
-  justify-content: center;
+  padding: 0 2rem 0 2rem;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
+  gap: 1rem;
   color: var(--secondayrColor);
 }
 
@@ -59,30 +60,43 @@ button:hover {
   background: var(--buttonColorHover);
 }
 
+h1 {
+  margin: auto;
+}
+
 .index {
-  /* margin-top: 3vh; */
-  width: 95vw;
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.26vw;
+  flex-direction: column;
 }
 
 /******************* Travel container styling *******************/
+
+#destinationsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  margin-bottom: 5rem;
+}
+
 .travelContainer {
   width: 100%;
-  height: 200px;
+  /* height: 200px; */
   background: #ffffff;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 15px;
   padding: 12px;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+
+  gap: 2rem;
 }
 
 .travelContainerHeader {
   display: flex;
   align-items: end;
-  gap: 8px;
+  gap: 1rem;
 }
 
 .city {
@@ -96,7 +110,7 @@ button:hover {
 }
 
 .travelImg {
-  height: 100%;
+  /* height: 100%; */
   max-width: 400px;
   border-radius: 10px;
   overflow: hidden;
@@ -112,13 +126,19 @@ button:hover {
 .destinationContent {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.description {
+  margin-top: auto;
+  margin-top: 1rem;
 }
 
 .deleteButtonGroup {
   height: 30px;
   display: flex;
   align-items: center;
+  justify-self: end;
 }
 
 .deleteButton {
@@ -147,10 +167,13 @@ button:hover {
 
 /******************* Signup styling *******************/
 form {
-  margin-top: 30vh;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
+  width: 30%;
+  margin-left: 5rem;
 }
 
 form div {
@@ -187,6 +210,28 @@ input::-webkit-input-placeholder {
 }
 
 input:focus {
+  outline: none;
+  background: var(--tertiaryColor);
+}
+
+.filterMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 30%;
+  margin-left: 5rem;
+}
+#dropdown {
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 2rem;
+}
+
+#dropdown:focus {
   outline: none;
   background: var(--tertiaryColor);
 }

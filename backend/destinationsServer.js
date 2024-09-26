@@ -44,7 +44,9 @@ app.get("/destinations/:filter", async (req, res) => {
   console.log("get destination with this filter", req.params.filter);
   try {
     const destinations = await getFilteredDestinations(req.params.filter);
-    res.json(destinations); // Send the data as a JSON response
+    res.json(destinations);
+
+    // Send the data as a JSON response
   } catch (error) {
     console.error("Error fetching destinations:", error);
     res.status(500).json({ message: "Failed to fetch destinations" });
