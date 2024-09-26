@@ -39,6 +39,19 @@ app.get("/destinations", async (req, res) => {
   }
 });
 
+// Get request for filtered destination
+app.get("/destinations/:filter", async (req, res) => {
+  console.log("get destination with this filter", req.params.filter);
+  try {
+    const destinations = await getFilteredDestinations(req.params.filter);
+    res.json(destinations); // Send the data as a JSON response
+  } catch (error) {
+    console.error("Error fetching destinations:", error);
+    res.status(500).json({ message: "Failed to fetch destinations" });
+  }
+  res.end();
+});
+
 // Delete request
 app.delete("/destinations/:id", (req, res) => {
   console.log("delete destination with this id", req.params.id);
@@ -83,6 +96,20 @@ async function getAllDestinations() {
 
     const destinations = await myColl.find({}).toArray();
     // console.log(destinations);
+    return destinations;
+  } finally {
+    await client.close();
+  }
+}
+
+async function getFilteredDestinations(filter) {
+  try {
+    await client.connect();
+    const myDB = client.db("travel");
+    const myColl = myDB.collection("destinations");
+
+    const destinations = await myColl.find({ country: filter }).toArray();
+    console.log("filtered destinations", destinations);
     return destinations;
   } finally {
     await client.close();

@@ -9,7 +9,7 @@ export async function getData() {
     }
 
     const destinations = await response.json();
-    console.log("these are all destinations", destinations);
+
     return destinations;
   } catch (error) {
     console.error(error);

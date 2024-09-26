@@ -16,9 +16,10 @@
 
 import { getData } from "./getAllDestinations.js";
 
+const allCountries = [];
+
 window.addEventListener("load", async () => {
   const allDestinations = await getData();
-  console.log(allDestinations);
 
   if (allDestinations.length === 0) {
     console.log("No destinations available");
@@ -26,6 +27,10 @@ window.addEventListener("load", async () => {
   }
 
   allDestinations.forEach((destination) => {
+    if (!allCountries.includes(destination.country)) {
+      allCountries.push(destination.country);
+    }
+
     let template = document.getElementById("destinationTemplate");
     let clone = template.content.cloneNode(true);
 
@@ -38,6 +43,19 @@ window.addEventListener("load", async () => {
   });
 });
 
-function deleteDestination(id) {
+async function deleteDestination(id) {
   console.log("Delete destination with this ID", id);
+
+  const url = `http://127.0.0.1:3003/destinations/${id}`;
+  console.log("URL", url);
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
