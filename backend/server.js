@@ -59,10 +59,10 @@ app.delete("/destinations/:id", async (req, res) => {
 });
 
 // Put request for destinations
-app.put("/destinations/:destinationId", (req, res) => {
-  console.log("params", req.params);
-  res.send("This is a put request!");
-});
+// app.put("/destinations/:Id", (req, res) => {
+//   console.log("params", req.params);
+//   res.send("This is a put request!");
+// });
 
 ///////////////////////////////////////// User routes /////////////////////////////////////////
 // Post request for users
@@ -180,7 +180,7 @@ async function createUser(newUser) {
   }
 }
 
-// Get filtered user emails
+// Get user emails
 async function getEmails() {
   try {
     await client.connect();
