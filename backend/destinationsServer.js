@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const mongoose = require("mongoose");
+const Destination = require("../schemas/Destination.js");
+
+mongoose.connect("mongodb://127.0.0.1:27017/travel");
 
 const port = 3003;
 
@@ -20,23 +24,46 @@ const client = new MongoClient(uri, {
 });
 
 // Post request
-app.post("/destinations", (req, res) => {
-  // HERE WE NEED TO send back the created object or at least the new ID
-  console.log(req.body);
-  createDestination(req.body);
+app.post("/destinations", async (req, res) => {
+  const destination = new Destination({
+    city: req.body.city,
+    country: req.body.country,
+    destination: req.body.description,
+  });
+  // if (destination.description !== "") {
+  //   console.log("great description");
+  //   const result = await destination.save();
+  //   res.status(201).json(result);
+  // } else {
+  //   console.log("add description");
+  // }
 
-  res.send("Got a POST request");
+  try {
+    const result = await destination.save();
+    res.status(201).json(result);
+    console.log("result", result);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ error });
+  }
+
+  // createDestination(req.body);
+
+  // res.send("Got a POST request");
 });
 
 // Get request
 app.get("/destinations", async (req, res) => {
-  try {
-    const destinations = await getAllDestinations();
-    res.json(destinations); // Send the data as a JSON response
-  } catch (error) {
-    console.error("Error fetching destinations:", error);
-    res.status(500).json({ message: "Failed to fetch destinations" });
-  }
+  const destination = await Destination.find({});
+
+  res.status(200).json(destination);
+  // try {
+  //   const destinations = await getAllDestinations();
+  //   res.json(destinations); // Send the data as a JSON response
+  // } catch (error) {
+  //   console.error("Error fetching destinations:", error);
+  //   res.status(500).json({ message: "Failed to fetch destinations" });
+  // }
 });
 
 // Get request for filtered destination
@@ -73,36 +100,37 @@ app.listen(port, () => {
 });
 
 //Helper functions
-async function createDestination(newDestination) {
-  try {
-    // Connect the client to the server
-    await client.connect();
-    const myDB = client.db("travel");
-    const myColl = myDB.collection("destinations");
 
-    const result = await myColl.insertOne(newDestination);
-    console.log("A document was inserted with the _id:", result.insertedId);
-    console.log("result object", result);
-    return result;
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
+// async function createDestination(newDestination) {
+//   try {
+//     // Connect the client to the server
+//     await client.connect();
+//     const myDB = client.db("travel");
+//     const myColl = myDB.collection("destinations");
 
-async function getAllDestinations() {
-  try {
-    await client.connect();
-    const myDB = client.db("travel");
-    const myColl = myDB.collection("destinations");
+//     const result = await myColl.insertOne(newDestination);
+//     console.log("A document was inserted with the _id:", result.insertedId);
+//     console.log("result object", result);
+//     return result;
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
 
-    const destinations = await myColl.find({}).toArray();
-    // console.log(destinations);
-    return destinations;
-  } finally {
-    await client.close();
-  }
-}
+// async function getAllDestinations() {
+//   try {
+//     await client.connect();
+//     const myDB = client.db("travel");
+//     const myColl = myDB.collection("destinations");
+
+//     const destinations = await myColl.find({}).toArray();
+//     // console.log(destinations);
+//     return destinations;
+//   } finally {
+//     await client.close();
+//   }
+// }
 
 async function getFilteredDestinations(filter) {
   try {

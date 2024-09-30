@@ -166,6 +166,7 @@ async function saveDestination(destination1) {
       body: JSON.stringify(destination1),
     });
     if (!response.ok) {
+      console.log("error from backend", response);
       throw new Error(`Response status: ${response.status}`);
     }
 
