@@ -165,7 +165,7 @@ async function addNewDestination() {
     document.getElementById("countryErrorMessage").textContent =
       result.error.errors?.country?.message || "";
     document.getElementById("descriptionErrorMessage").textContent =
-      result.error.errors?.description?.message;
+      result.error.errors?.description?.message || "";
   } else {
     document.getElementById("cityErrorMessage").textContent = "";
     document.getElementById("countryErrorMessage").textContent = "";
