@@ -22,32 +22,38 @@ const allCountries = [];
 let allFilteredDestinations = [];
 
 window.addEventListener("load", async () => {
-  const allDestinations = await getData();
+  try {
+    const allDestinations = await getData();
 
-  if (allDestinations.length === 0) {
-    console.log("No destinations available");
-    return;
-  }
-  allFilteredDestinations = allDestinations;
-
-  allDestinations.forEach((destination) => {
-    if (!allCountries.includes(destination.country)) {
-      allCountries.push(destination.country);
+    if (allDestinations.length === 0) {
+      console.log("No destinations available");
+      return;
     }
+    allFilteredDestinations = allDestinations;
 
-    let template = document.getElementById("destinationTemplate");
-    let clone = template.content.cloneNode(true);
+    allDestinations.forEach((destination) => {
+      if (!allCountries.includes(destination.country)) {
+        allCountries.push(destination.country);
+      }
 
-    clone.querySelector(".city").textContent = destination.city;
-    clone.querySelector(".country").textContent = destination.country;
-    clone.querySelector(".description").textContent = destination.description;
-    clone
-      .querySelector(".deleteButton")
-      .addEventListener("click", () => deleteDestination(destination._id));
-    document.getElementById("destinationsContainer").appendChild(clone);
-  });
+      let template = document.getElementById("destinationTemplate");
+      let clone = template.content.cloneNode(true);
 
-  getFilters();
+      clone.querySelector(".city").textContent = destination.city;
+      clone.querySelector(".country").textContent = destination.country;
+      clone.querySelector(".description").textContent = destination.description;
+      clone
+        .querySelector(".deleteButton")
+        .addEventListener("click", () => deleteDestination(destination._id));
+      document.getElementById("destinationsContainer").appendChild(clone);
+    });
+
+    getFilters();
+    document.getElementById("stateMessage").textContent = "";
+  } catch (error) {
+    document.getElementById("stateMessage").textContent =
+      "Server was unavailable, please try again in 32 days";
+  }
 });
 
 //Display all countries in a filter select
@@ -139,17 +145,34 @@ let country = document.getElementById("country");
 let description = document.getElementById("description");
 const submit = document.getElementById("addDestination");
 
-submit.addEventListener("click", function (e) {
-  addNewDestination();
+submit.addEventListener("click", async function (e) {
   e.preventDefault();
+  document.getElementById("stateMessage").textContent = "Saving message..."; //loading state
+  await addNewDestination();
 });
 
-function addNewDestination() {
+async function addNewDestination() {
   const newCity = city.value;
   const newCountry = country.value;
   const newDescription = description.value;
   const destination1 = new Destination(newCity, newCountry, newDescription);
-  saveDestination(destination1);
+
+  const result = await saveDestination(destination1);
+
+  if (result.error) {
+    document.getElementById("cityErrorMessage").textContent =
+      result.error.errors?.city?.message || "";
+    document.getElementById("countryErrorMessage").textContent =
+      result.error.errors?.country?.message || "";
+    document.getElementById("descriptionErrorMessage").textContent =
+      result.error.errors?.description?.message;
+  } else {
+    document.getElementById("cityErrorMessage").textContent = "";
+    document.getElementById("countryErrorMessage").textContent = "";
+    document.getElementById("descriptionErrorMessage").textContent = "";
+  }
+
+  document.getElementById("stateMessage").textContent = "";
 }
 
 // Post data to mongoDB
@@ -165,15 +188,16 @@ async function saveDestination(destination1) {
       },
       body: JSON.stringify(destination1),
     });
-    if (!response.ok) {
-      console.log("error from backend", response);
-      throw new Error(`Response status: ${response.status}`);
-    }
+    // if (!response.ok) {
+    //   console.log("error from backend", response);
+    //   throw new Error(`Response status: ${response.status}`);
+    // }
 
     const json = await response.json();
-    console.log(json);
+
+    return json;
   } catch (error) {
-    // console.error(error);
+    console.error(error);
   }
   updateList();
 }

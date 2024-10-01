@@ -22,14 +22,17 @@
     </header>
     <main id="main" class="index">
       <h1>Travel destinations</h1>
+
       <form>
         <label for="City">City</label>
         <input id="city" type="text" />
+        <span id="cityErrorMessage" style="color: red"></span>
         <label for="Country">Country</label>
         <input id="country" type="text" />
+        <span id="countryErrorMessage" style="color: red"></span>
         <label for="description">Description</label>
         <input id="description" type="text" />
-
+        <span id="descriptionErrorMessage" style="color: red"></span>
         <button id="addDestination">Submit</button>
       </form>
 
@@ -39,7 +42,7 @@
           <option value="">Choose a country</option>
         </select>
       </div>
-
+      <div id="stateMessage">Loading destinations...</div>
       <template id="dropdownTemplate"
         ><option class="filterOption" value="">France</option></template
       >

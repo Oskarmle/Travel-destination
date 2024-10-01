@@ -5,8 +5,14 @@ const destinationSchema = new mongoose.Schema({
     type: String,
     required: "City must be filled out",
   },
-  country: String,
-  description: String,
+  country: {
+    type: String,
+    required: "Country must be filled out",
+  },
+  description: {
+    type: String,
+    required: "Description must be filled out",
+  },
 });
 
 module.exports = mongoose.model("Destination", destinationSchema);
