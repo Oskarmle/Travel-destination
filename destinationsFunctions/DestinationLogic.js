@@ -147,8 +147,9 @@ const submit = document.getElementById("addDestination");
 
 submit.addEventListener("click", async function (e) {
   e.preventDefault();
-  document.getElementById("stateMessage").textContent = "Saving message..."; //loading state
+  document.getElementById("stateMessage").textContent = "Saving destination..."; //loading state
   await addNewDestination();
+  updateList();
 });
 
 async function addNewDestination() {
