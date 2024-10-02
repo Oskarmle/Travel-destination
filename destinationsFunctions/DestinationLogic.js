@@ -25,7 +25,6 @@ window.addEventListener("load", async () => {
     try {
         const allDestinations = await getData();
         console.log(allDestinations);
-        
 
         if (allDestinations.length === 0) {
             console.log("No destinations available");
@@ -41,10 +40,11 @@ window.addEventListener("load", async () => {
             let template = document.getElementById("destinationTemplate");
             let clone = template.content.cloneNode(true);
 
-            clone.querySelector(".title").textContent = destination.title
+            clone.querySelector(".title").textContent = destination.title;
             clone.querySelector(".city").textContent = destination.city;
             clone.querySelector(".country").textContent = destination.country;
-            clone.querySelector(".dateStart").textContent = destination.dateStart
+            clone.querySelector(".dateStart").textContent =
+                destination.dateStart;
             clone.querySelector(".dateEnd").textContent = destination.dateEnd;
             clone.querySelector(".description").textContent =
                 destination.description;
@@ -98,11 +98,11 @@ export function updateList() {
         let template = document.getElementById("destinationTemplate");
         let clone = template.content.cloneNode(true);
 
-        clone.querySelector(".title").textContent = destination.title
+        clone.querySelector(".title").textContent = destination.title;
         clone.querySelector(".city").textContent = destination.city;
         clone.querySelector(".country").textContent = destination.country;
-        clone.querySelector(".dateStart").textContent = destination.dateStart
-        clone.querySelector(".dateEnd").textContent = destination.dateEnd
+        clone.querySelector(".dateStart").textContent = destination.dateStart;
+        clone.querySelector(".dateEnd").textContent = destination.dateEnd;
         clone.querySelector(".description").textContent =
             destination.description;
         clone
@@ -191,15 +191,24 @@ async function addNewDestination() {
     const result = await saveDestination(destination1);
 
     if (result.error) {
+        document.getElementById("titleErrorMessage").textContent =
+            result.error.errors?.title?.message || "";
         document.getElementById("cityErrorMessage").textContent =
             result.error.errors?.city?.message || "";
         document.getElementById("countryErrorMessage").textContent =
             result.error.errors?.country?.message || "";
+        document.getElementById("dateStartErrorMessage").textContent =
+            result.error.errors?.dateStart?.message || "";
+        document.getElementById("dateEndErrorMessage").textContent =
+            result.error.errors?.dateEnd?.message || "";
         document.getElementById("descriptionErrorMessage").textContent =
             result.error.errors?.description?.message || "";
     } else {
+        document.getElementById("titleErrorMessage").textContent = "";
         document.getElementById("cityErrorMessage").textContent = "";
         document.getElementById("countryErrorMessage").textContent = "";
+        document.getElementById("dateStartErrorMessage").textContent = "";
+        document.getElementById("dateEndErrorMessage").textContent = "";
         document.getElementById("descriptionErrorMessage").textContent = "";
     }
 
@@ -208,7 +217,19 @@ async function addNewDestination() {
 
 // Post data to mongoDB
 async function saveDestination(destination1) {
-    allFilteredDestinations.push(destination1);
+  // Shitty way but working
+    if (
+        destination1.title === "" ||
+        destination1.city === "" ||
+        destination1.country === "" ||
+        destination1.dateStart === "" ||
+        destination1.dateEnd === "" ||
+        destination1.description === ""
+    ) {
+        console.log(destination1);
+    } else {
+        allFilteredDestinations.push(destination1);
+    }
 
     const url = "http://127.0.0.1:3003/destinations";
     try {

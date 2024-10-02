@@ -39,10 +39,11 @@
         <main id="main" class="index">
             <h1>Travel destinations</h1>
 
-            <form>
+            <form method="POST">
                 <!-- Title -->
                 <label for="Title">Title</label>
                 <input id="title" type="text" required />
+                <span id="titleErrorMessage" style="color: red"></span>
                 <!-- city -->
                 <label for="City">City</label>
                 <input id="city" type="text" required />
@@ -54,9 +55,11 @@
                 <!-- date start -->
                 <label for="dateStart">From</label>
                 <input type="date" value="" id="dateStart" required />
+                <span id="dateStartErrorMessage" style="color: red"></span>
                 <!-- date end -->
                 <label for="dateEnd">To</label>
                 <input type="date" value="" id="dateEnd" required />
+                <span id="dateEndErrorMessage" style="color: red"></span>
                 <!-- description -->
                 <label for="description">Description</label>
                 <textarea
@@ -68,6 +71,7 @@
                 <!-- add Image NOT WORKING -->
                 <label for="image">add image</label>
                 <input type="file" />
+                <!-- <span id="imageErrorMessage" style="color: red"></span> -->
                 <!-- submit -->
                 <button id="addDestination" type="submit">Submit</button>
             </form>
