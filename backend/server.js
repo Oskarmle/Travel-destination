@@ -26,8 +26,11 @@ const client = new MongoClient(uri, {
 // Post request
 app.post("/destinations", async (req, res) => {
   const destination = new Destination({
+    title: req.body.title,
     city: req.body.city,
     country: req.body.country,
+    dateStart: req.body.dateStart,
+    dateEnd: req.body.dateEnd,
     description: req.body.description,
   });
 
