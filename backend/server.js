@@ -3,6 +3,7 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const Destination = require("../schemas/Destination.js");
+const User = require("../schemas/User.js");
 
 mongoose.connect("mongodb://127.0.0.1:27017/travel");
 
@@ -16,72 +17,89 @@ app.use(cors());
 //Set up a connection to MongoDB
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    },
 });
 
 // Post request
 app.post("/destinations", async (req, res) => {
-  const destination = new Destination({
-    title: req.body.title,
-    city: req.body.city,
-    country: req.body.country,
-    dateStart: req.body.dateStart,
-    dateEnd: req.body.dateEnd,
-    description: req.body.description,
-  });
+    const destination = new Destination({
+        title: req.body.title,
+        city: req.body.city,
+        country: req.body.country,
+        dateStart: req.body.dateStart,
+        dateEnd: req.body.dateEnd,
+        description: req.body.description,
+    });
 
-  try {
-    const result = await destination.save();
-    res.status(201).json(result);
-    console.log("result", result);
-  } catch (error) {
-    console.log("error", error);
-    res.status(500).json({ error });
-  }
+    try {
+        const result = await destination.save();
+        res.status(201).json(result);
+        console.log("result", result);
+    } catch (error) {
+        console.log("error", error);
+        res.status(500).json({ error });
+    }
+});
+
+app.post("/users", async (req, res) => {
+    const user = new User({
+        firstName: req.body.firstname,
+        lastName: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+    });
+
+    try {
+        const result = await user.save();
+        res.status(201).json(result);
+    } catch (error) {
+        console.log("error", error);
+        res.status(500).json({ error });
+    }
 });
 
 // Get request
 app.get("/destinations", async (req, res) => {
-  const destination = await Destination.find({});
+    const destination = await Destination.find({});
 
-  res.status(200).json(destination);
+    res.status(200).json(destination);
 });
 
 // Get request for filtered destination
 app.get("/destinations/:filter", async (req, res) => {
-  console.log("get destination with this filter", req.params.filter);
-  try {
-    const destinations = await getFilteredDestinations(req.params.filter);
-    res.json(destinations);
+    console.log("get destination with this filter", req.params.filter);
+    try {
+        const destinations = await getFilteredDestinations(req.params.filter);
+        res.json(destinations);
 
-    // Send the data as a JSON response
-  } catch (error) {
-    console.error("Error fetching destinations:", error);
-    res.status(500).json({ message: "Failed to fetch destinations" });
-  }
-  res.end();
+        // Send the data as a JSON response
+    } catch (error) {
+        console.error("Error fetching destinations:", error);
+        res.status(500).json({ message: "Failed to fetch destinations" });
+    }
+    res.end();
 });
 
 // Delete request
 app.delete("/destinations/:id", (req, res) => {
-  console.log("delete destination with this id", req.params.id);
-  res.send("Got a DELETE request at /destinations");
-  deleteDestination(req.params.id);
+    console.log("delete destination with this id", req.params.id);
+    res.send("Got a DELETE request at /destinations");
+    deleteDestination(req.params.id);
 });
 
 // Put request
 app.put("/destinations/:destinationId", (req, res) => {
-  console.log("params", req.params);
+    console.log("params", req.params);
 
-  res.send("This is a put request!");
+    res.send("This is a put request!");
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+    console.log(`Example app listening on port ${port}`);
 });
 
 //Helper functions
@@ -118,41 +136,43 @@ app.listen(port, () => {
 // }
 
 async function getFilteredDestinations(filter) {
-  try {
-    await client.connect();
-    const myDB = client.db("travel");
-    const myColl = myDB.collection("destinations");
+    try {
+        await client.connect();
+        const myDB = client.db("travel");
+        const myColl = myDB.collection("destinations");
 
-    const destinations = await myColl.find({ country: filter }).toArray();
-    console.log("filtered destinations", destinations);
-    return destinations;
-  } finally {
-    await client.close();
-  }
+        const destinations = await myColl.find({ country: filter }).toArray();
+        console.log("filtered destinations", destinations);
+        return destinations;
+    } finally {
+        await client.close();
+    }
 }
 
 async function deleteDestination(destinationId) {
-  try {
-    await client.connect();
-    const myDB = client.db("travel");
-    const myColl = myDB.collection("destinations");
+    try {
+        await client.connect();
+        const myDB = client.db("travel");
+        const myColl = myDB.collection("destinations");
 
-    // Safely create an ObjectId from the string ID
-    const query = {
-      _id: ObjectId.isValid(destinationId) ? new ObjectId(destinationId) : null,
-    };
+        // Safely create an ObjectId from the string ID
+        const query = {
+            _id: ObjectId.isValid(destinationId)
+                ? new ObjectId(destinationId)
+                : null,
+        };
 
-    if (!query._id) {
-      console.log("Invalid ObjectId format.");
-      return; // Exit early if the ID is not valid
+        if (!query._id) {
+            console.log("Invalid ObjectId format.");
+            return; // Exit early if the ID is not valid
+        }
+        const result = await myColl.deleteOne(query);
+        if (result.deletedCount === 1) {
+            console.log("Successfully deleted destination with the ID", query);
+        } else {
+            console.log("No documents matched the query. Deleted 0 documents.");
+        }
+    } finally {
+        await client.close();
     }
-    const result = await myColl.deleteOne(query);
-    if (result.deletedCount === 1) {
-      console.log("Successfully deleted destination with the ID", query);
-    } else {
-      console.log("No documents matched the query. Deleted 0 documents.");
-    }
-  } finally {
-    await client.close();
-  }
 }

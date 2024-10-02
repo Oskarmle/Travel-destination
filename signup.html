@@ -24,23 +24,32 @@
     <main class="signup">
       <form>
         <div class="name">
+          <!-- firstname -->
           <div class="firstname formContent">
             <label for="firstName">Firstname</label>
             <input type="text" id="firstname" placeholder="Firstname" />
+            <span id="firstnameErrorMessage" style="color: red"></span>
           </div>
+          <!-- lastname -->
           <div class="lastname formContent">
             <label for="lastName">lastname</label>
             <input type="text" id="lastname" placeholder="Lastname" />
+            <span id="lastnameErrorMessage" style="color: red"></span>
           </div>
         </div>
+        <!-- email -->
         <div class="email formContent">
           <label for="email">E-mail</label>
           <input type="text" id="email" placeholder="E-mail" />
+          <span id="emailErrorMessage" style="color: red"></span>
+
         </div>
+        <!-- password -->
         <div class="password formContent">
           <label for="password">Password</label>
           <input type="password" id="password" placeholder="Password" />
         </div>
+        <!-- password repeat -->
         <div class="repPassword formContent">
           <label for="email">Repeat password</label>
           <input type="password" id="passwordCheck" placeholder="Password" />
