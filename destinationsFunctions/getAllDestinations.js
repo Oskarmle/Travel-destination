@@ -15,5 +15,3 @@ export async function getData() {
     console.error(error);
   }
 }
-
-// window.addEventListener("load", getData);

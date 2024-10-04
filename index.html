@@ -1,121 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- Stylesheet link -->
-        <link rel="stylesheet" href="style.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Stylesheet link -->
+    <link rel="stylesheet" href="style.css" />
 
-        <!-- Destination scripts -->
-        <script
-            src="./destinationsFunctions/addDestination.js"
-            defer
-            type="module"
-        ></script>
-        <script
-            src="./destinationsFunctions/Destination.js"
-            type="module"
-        ></script>
-        <script
-            src="./destinationsFunctions/DestinationLogic.js"
-            defer
-            type="module"
-        ></script>
-        <script
-            src="./destinationsFunctions/getAllDestinations.js"
-            defer
-            type="module"
-        ></script>
+    <!-- Destination scripts -->
+    <script
+      src="./destinationsFunctions/addDestination.js"
+      defer
+      type="module"
+    ></script>
+    <script src="./destinationsFunctions/Destination.js" type="module"></script>
+    <script
+      src="./destinationsFunctions/DestinationLogic.js"
+      defer
+      type="module"
+    ></script>
+    <script
+      src="./destinationsFunctions/getAllDestinations.js"
+      defer
+      type="module"
+    ></script>
 
-        <title>Travel destination</title>
-    </head>
-    <body>
-        <header class="headerContainer">
-            <button>Login</button>
-            <a href="signup.html">
-                <button>Sign up</button>
-            </a>
-        </header>
-        <main id="main" class="index">
-            <h1>Travel destinations</h1>
+    <title>Travel destination</title>
+  </head>
+  <body>
+    <header class="headerContainer">
+      <button>Login</button>
+      <a href="signup.html">
+        <button>Sign up</button>
+      </a>
+    </header>
+    <main id="main" class="index">
+      <h1>Travel destinations</h1>
 
-            <form method="POST">
-                <!-- Title -->
-                <label for="Title">Title</label>
-                <input id="title" type="text" required />
-                <span id="titleErrorMessage" style="color: red"></span>
-                <!-- city -->
-                <label for="City">City</label>
-                <input id="city" type="text" required />
-                <span id="cityErrorMessage" style="color: red"></span>
-                <!-- country -->
-                <label for="Country">Country</label>
-                <input id="country" type="text" required />
-                <span id="countryErrorMessage" style="color: red"></span>
-                <!-- date start -->
-                <label for="dateStart">From</label>
-                <input type="date" value="" id="dateStart" required />
-                <span id="dateStartErrorMessage" style="color: red"></span>
-                <!-- date end -->
-                <label for="dateEnd">To</label>
-                <input type="date" value="" id="dateEnd" required />
-                <span id="dateEndErrorMessage" style="color: red"></span>
-                <!-- description -->
-                <label for="description">Description</label>
-                <textarea
-                    name="description"
-                    id="description"
-                    required
-                ></textarea>
-                <span id="descriptionErrorMessage" style="color: red"></span>
-                <!-- add Image NOT WORKING -->
-                <label for="image">add image</label>
-                <input type="file" />
-                <!-- <span id="imageErrorMessage" style="color: red"></span> -->
-                <!-- submit -->
-                <button id="addDestination" type="submit">Submit</button>
-            </form>
+      <form method="POST">
+        <!-- Title -->
+        <label for="Title">Title</label>
+        <input id="title" type="text" required />
+        <span id="titleErrorMessage" style="color: red"></span>
+        <!-- city -->
+        <label for="City">City</label>
+        <input id="city" type="text" required />
+        <span id="cityErrorMessage" style="color: red"></span>
+        <!-- country -->
+        <label for="Country">Country</label>
+        <input id="country" type="text" required />
+        <span id="countryErrorMessage" style="color: red"></span>
+        <!-- date start -->
+        <label for="dateStart">From</label>
+        <input type="date" value="" id="dateStart" required />
+        <span id="dateStartErrorMessage" style="color: red"></span>
+        <!-- date end -->
+        <label for="dateEnd">To</label>
+        <input type="date" value="" id="dateEnd" required />
+        <span id="dateEndErrorMessage" style="color: red"></span>
+        <!-- description -->
+        <label for="description">Description</label>
+        <textarea name="description" id="description" required></textarea>
+        <span id="descriptionErrorMessage" style="color: red"></span>
+        <!-- add Image NOT WORKING -->
+        <label for="image">add image</label>
+        <input type="file" />
+        <!-- <span id="imageErrorMessage" style="color: red"></span> -->
+        <!-- submit -->
+        <button id="addDestination" type="submit">Submit</button>
+      </form>
 
-            <div class="filterMenu">
-                <label for="dropdown">Choose a country</label>
-                <select id="dropdown">
-                    <option value="">Choose a country</option>
-                </select>
-            </div>
-            <div id="stateMessage">Loading destinations...</div>
-            <template id="dropdownTemplate"
-                ><option class="filterOption" value="">France</option></template
-            >
-            <div id="destinationsContainer"></div>
-        </main>
+      <div class="filterMenu">
+        <label for="dropdown">Choose a country</label>
+        <select id="dropdown">
 
-      </body>
-      </html>
-      
-      <template id="destinationTemplate">
-          <div class="travelContainer">
-              <div class="travelImg">
-                  <img src="./images/London.jpg" alt="" />
-              </div>
-              <div class="destinationContent">
-                  <p class="title"></p>
-                  <div class="travelContainerHeader">
-                      <p class="city"></p>
-                      <p class="dateStart"></p>
-                      <p class="dateEnd"></p>
-                  </div>
-                  <p class="country"></p>
-                  <div class="description">
-                      <p></p>
-                  </div>
-                  <div class="deleteButtonGroup">
-                      <p class="deleteButton">Delete</p>
-                      <div class="confirmDelete">
-                          <p></p>
-                          <button class="delete">Yes</button>
-                          <button class="canceDelete">Cancel</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
+        </select>
+      </div>
+      <div id="stateMessage">Loading destinations...</div>
+      <template id="dropdownTemplate"
+        ><option class="filterOption" value="">France</option>
       </template>
+      <div id="destinationsContainer"></div>
+    </main>
+  </body>
+</html>
+
+<template id="destinationTemplate">
+  <div class="travelContainer">
+    <div class="travelImg">
+      <img src="./images/London.jpg" alt="" />
+    </div>
+    <div class="destinationContent">
+      <p class="title"></p>
+      <div class="travelContainerHeader">
+        <p class="city"></p>
+        <p class="dateStart"></p>
+        <p class="dateEnd"></p>
+      </div>
+      <p class="country"></p>
+      <div class="description">
+        <p></p>
+      </div>
+      <div class="deleteButtonGroup">
+        <p class="deleteButton">Delete</p>
+        <div class="confirmDelete">
+          <p></p>
+          <button class="delete">Yes</button>
+          <button class="canceDelete">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,44 +1,54 @@
-// import { Destination } from "./Destination.js";
-// import { getData } from "./getAllDestinations.js";
+// Import functions
+import { saveDestination } from "./saveDestination.js";
 
-// let city = document.getElementById("city");
-// let country = document.getElementById("country");
-// let description = document.getElementById("description");
-// const submit = document.getElementById("addDestination");
+// Import class
+import { Destination } from "./Destination.js";
 
-// submit.addEventListener("click", function (e) {
-//   addNewDestination();
-//   e.preventDefault();
+let title = document.getElementById("title");
+let city = document.getElementById("city");
+let country = document.getElementById("country");
+let dateStart = document.getElementById("dateStart");
+let dateEnd = document.getElementById("dateEnd");
+let description = document.getElementById("description");
 
-// });
+export async function addNewDestination(allFilteredDestinations) {
+  const newTitle = title.value;
+  const newCity = city.value;
+  const newCountry = country.value;
+  const newDateStart = dateStart.value;
+  const newDateEnd = dateEnd.value;
+  const newDescription = description.value;
+  const destination1 = new Destination(
+    newTitle,
+    newCity,
+    newCountry,
+    newDateStart,
+    newDateEnd,
+    newDescription
+  );
 
-// function addNewDestination() {
-//   const newCity = city.value;
-//   const newCountry = country.value;
-//   const newDescription = description.value;
-//   const destination1 = new Destination(newCity, newCountry, newDescription);
-//   saveDestination(destination1);
-// }
+  const result = await saveDestination(destination1, allFilteredDestinations);
 
-// // Post data to mongoDB
-// async function saveDestination(destination1) {
-//   console.log(destination1);
-//   const url = "http://127.0.0.1:3003/destinations";
-//   try {
-//     const response = await fetch(url, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(destination1),
-//     });
-//     if (!response.ok) {
-//       throw new Error(`Response status: ${response.status}`);
-//     }
-
-//     const json = await response.json();
-//     console.log(json);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+  if (result.error) {
+    document.getElementById("titleErrorMessage").textContent =
+      result.error.errors?.title?.message || "";
+    document.getElementById("cityErrorMessage").textContent =
+      result.error.errors?.city?.message || "";
+    document.getElementById("countryErrorMessage").textContent =
+      result.error.errors?.country?.message || "";
+    document.getElementById("dateStartErrorMessage").textContent =
+      result.error.errors?.dateStart?.message || "";
+    document.getElementById("dateEndErrorMessage").textContent =
+      result.error.errors?.dateEnd?.message || "";
+    document.getElementById("descriptionErrorMessage").textContent =
+      result.error.errors?.description?.message || "";
+  } else {
+    document.getElementById("titleErrorMessage").textContent = "";
+    document.getElementById("cityErrorMessage").textContent = "";
+    document.getElementById("countryErrorMessage").textContent = "";
+    document.getElementById("dateStartErrorMessage").textContent = "";
+    document.getElementById("dateEndErrorMessage").textContent = "";
+    document.getElementById("descriptionErrorMessage").textContent = "";
+  }
+  document.getElementById("stateMessage").textContent = "";
+}
