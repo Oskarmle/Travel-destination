@@ -1,4 +1,5 @@
 export function updateList(allFilteredDestinations) {
+  let token = sessionStorage.getItem("validToken");
   const mainContainer = document.getElementById("destinationsContainer");
   mainContainer.innerHTML = "";
   allFilteredDestinations.forEach((destination) => {
@@ -11,9 +12,20 @@ export function updateList(allFilteredDestinations) {
     clone.querySelector(".dateStart").textContent = destination.dateStart;
     clone.querySelector(".dateEnd").textContent = destination.dateEnd;
     clone.querySelector(".description").textContent = destination.description;
-    clone
-      .querySelector(".deleteButton")
-      .addEventListener("click", () => deleteDestination(destination._id));
+    if (token !== null && token !== undefined && token !== "") {
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", () => {
+        deleteDestination(destination._id, allFilteredDestinations);
+      });
+
+      const deleteButtonGroup = clone.querySelector(".deleteButtonGroup"); // Adjust selector based on your template
+      if (deleteButtonGroup) {
+        deleteButtonGroup.appendChild(deleteButton);
+      } else {
+        console.error("deleteButtonGroup not found in the template.");
+      }
+    }
     mainContainer.appendChild(clone);
   });
 }

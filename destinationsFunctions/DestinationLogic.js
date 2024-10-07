@@ -10,6 +10,9 @@ let allFilteredDestinations = [];
 let allDestinations = [];
 
 window.addEventListener("load", async () => {
+  let token = sessionStorage.getItem("validToken");
+  console.log(token);
+
   try {
     allDestinations = await getData();
     console.log(allDestinations);
@@ -34,11 +37,21 @@ window.addEventListener("load", async () => {
       clone.querySelector(".dateStart").textContent = destination.dateStart;
       clone.querySelector(".dateEnd").textContent = destination.dateEnd;
       clone.querySelector(".description").textContent = destination.description;
-      clone
-        .querySelector(".deleteButton")
-        .addEventListener("click", () =>
-          deleteDestination(destination._id, allFilteredDestinations)
-        );
+      if (token !== null && token !== undefined && token !== "") {
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", () => {
+          deleteDestination(destination._id, allFilteredDestinations);
+        });
+
+        const deleteButtonGroup = clone.querySelector(".deleteButtonGroup"); // Adjust selector based on your template
+        if (deleteButtonGroup) {
+          deleteButtonGroup.appendChild(deleteButton);
+        } else {
+          console.error("deleteButtonGroup not found in the template.");
+        }
+      }
+
       document.getElementById("destinationsContainer").appendChild(clone);
     });
 
@@ -50,16 +63,19 @@ window.addEventListener("load", async () => {
   }
 });
 
+// let isUserLoggedIn = () => {
+//   let token = sessionStorage.getItem("validToken")
+// };
+
 //Display all countries in a filter select
 function getFilters() {
   let updateTemplate = document.getElementById("dropdown");
   updateTemplate.innerHTML = "";
 
-
   // WE HAVE A HUGE PROBLEM HERE ---------------------------------------------------------------------------------------
-  const allCountriesOption = document.createElement("option")
-  allCountriesOption.setAttribute("value", allCountries)
-  allCountriesOption.textContent = "all countries"
+  const allCountriesOption = document.createElement("option");
+  allCountriesOption.setAttribute("value", allCountries);
+  allCountriesOption.textContent = "all countries";
   updateTemplate.appendChild(allCountriesOption);
 
   allCountries.forEach((country) => {
