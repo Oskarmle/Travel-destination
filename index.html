@@ -68,7 +68,8 @@
         <input type="file" />
         <!-- <span id="imageErrorMessage" style="color: red"></span> -->
         <!-- submit -->
-        <button id="addDestination" type="submit">Submit</button>
+        <button id="addDestination" class="showButton" type="submit">Submit</button>
+        <button id="editDestinationButton" class="invisible" type="button">Update information</button>
       </form>
 
       <div class="filterMenu">
@@ -82,10 +83,11 @@
       <div id="destinationsContainer"></div>
     </main>
   </body>
-</html>
-
-<template id="destinationTemplate">
-  <div class="travelContainer">
+  </html>
+  
+  <template id="destinationTemplate">
+    <div class="travelContainer">
+    <button class="edit">Edit</button>
     <div class="travelImg">
       <img src="./images/London.jpg" alt="" />
     </div>

@@ -25,6 +25,7 @@ const destinationSchema = new mongoose.Schema({
     type: String,
     required: "Description must be filled out",
   },
+  // _id: mongoose.Schema.Types.ObjectId,
 });
 
 module.exports = mongoose.model("Destination", destinationSchema);

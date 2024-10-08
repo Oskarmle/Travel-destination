@@ -138,48 +138,44 @@ app.delete("/destinations/:id", (req, res) => {
 });
 
 // Put request
-app.put("/destinations/:destinationId", (req, res) => {
+app.put("/destinations/:destinationId", async (req, res) => {
   console.log("params", req.params);
+  const { destinationId } = req.params;
+  const updateData = req.body;
 
-  res.send("This is a put request!");
+  try {
+    // Log the params and body for debugging purposes
+    console.log("params", destinationId);
+    console.log("body", updateData);
+
+    // Check if destinationId is valid
+    if (!mongoose.Types.ObjectId.isValid(destinationId)) {
+      return res.status(400).send("Invalid destination ID");
+    }
+
+    // Find the destination by ID and update it
+    const updatedDestination = await Destination.findByIdAndUpdate(
+      destinationId,
+      updateData,
+      { new: true, runValidators: true } // Options: return the updated doc and run validators
+    );
+
+    if (!updatedDestination) {
+      return res.status(404).send("Destination not found");
+    }
+
+    // Send back the updated document
+    res.status(200).json(updatedDestination);
+  } catch (error) {
+    console.error("Error updating destination:", error);
+    res.status(500).send("Server error");
+  }
+  // res.send("This is a put request!");
 });
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-
-//Helper functions
-
-// async function createDestination(newDestination) {
-//   try {
-//     // Connect the client to the server
-//     await client.connect();
-//     const myDB = client.db("travel");
-//     const myColl = myDB.collection("destinations");
-
-//     const result = await myColl.insertOne(newDestination);
-//     console.log("A document was inserted with the _id:", result.insertedId);
-//     console.log("result object", result);
-//     return result;
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-
-// async function getAllDestinations() {
-//   try {
-//     await client.connect();
-//     const myDB = client.db("travel");
-//     const myColl = myDB.collection("destinations");
-
-//     const destinations = await myColl.find({}).toArray();
-//     // console.log(destinations);
-//     return destinations;
-//   } finally {
-//     await client.close();
-//   }
-// }
 
 async function getFilteredDestinations(filter) {
   try {

@@ -4,6 +4,10 @@ import { updateList } from "./updateList.js";
 import { addNewDestination } from "./addDestination.js";
 import { deleteDestination } from "./deleteDestination.js";
 import { filterDestinations } from "./filterDestinations.js";
+import { editDestination } from "./editDestination.js";
+
+// Import class
+import { Destination } from "./Destination.js";
 
 const allCountries = [];
 let allFilteredDestinations = [];
@@ -15,14 +19,15 @@ window.addEventListener("load", async () => {
 
   try {
     allDestinations = await getData();
-    console.log(allDestinations);
+    // console.log(allDestinations);
 
     if (allDestinations.length === 0) {
       console.log("No destinations available");
       return;
     }
     allFilteredDestinations = allDestinations;
-
+    console.log(allFilteredDestinations);
+    
     allDestinations.forEach((destination) => {
       if (!allCountries.includes(destination.country)) {
         allCountries.push(destination.country);
@@ -37,6 +42,53 @@ window.addEventListener("load", async () => {
       clone.querySelector(".dateStart").textContent = destination.dateStart;
       clone.querySelector(".dateEnd").textContent = destination.dateEnd;
       clone.querySelector(".description").textContent = destination.description;
+      clone.querySelector(".edit").addEventListener("click", function(){
+        const editButton = document.getElementById("editDestinationButton")
+        editButton.classList.remove("invisible")
+        editButton.classList.add("showButton")
+        document.getElementById("addDestination").classList.remove("showButton")
+        document.getElementById("addDestination").classList.add("invisible")
+
+        // Display data in form
+        let title = document.getElementById("title");
+        let city = document.getElementById("city");
+        let country = document.getElementById("country");
+        let dateStart = document.getElementById("dateStart");
+        let dateEnd = document.getElementById("dateEnd");
+        let description = document.getElementById("description");
+
+        title.value = destination.title
+        city.value = destination.city
+        country.value = destination.country
+        dateStart.value = destination.dateStart
+        dateEnd.value = destination.dateEnd
+        description.value = destination.description
+
+        editButton.addEventListener("click", async function(e){
+          e.preventDefault();
+          
+          const newTitle = title.value;
+          const newCity = city.value;
+          const newCountry = country.value;
+          const newDateStart = dateStart.value;
+          const newDateEnd = dateEnd.value;
+          const newDescription = description.value;
+          const updatedDestination = new Destination(
+            newTitle,
+            newCity,
+            newCountry,
+            newDateStart,
+            newDateEnd,
+            newDescription
+          );
+          console.log("From destinationLogic file",updatedDestination);
+          
+          const result = await editDestination(destination._id, allFilteredDestinations, updatedDestination);
+          console.log("result", result);
+          
+        })
+
+      })
       if (token !== null && token !== undefined && token !== "") {
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
@@ -62,10 +114,6 @@ window.addEventListener("load", async () => {
       "Server was unavailable, please try again in 32 days";
   }
 });
-
-// let isUserLoggedIn = () => {
-//   let token = sessionStorage.getItem("validToken")
-// };
 
 //Display all countries in a filter select
 function getFilters() {
