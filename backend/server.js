@@ -30,10 +30,10 @@ const client = new MongoClient(uri, {
 });
 
 // middleware in the middle of everything ...... :)
-app.use('/users/login', (req, res, next) => {
-    console.log(`${req.method} request for '${req.url}'`);
-    next();
-  });
+app.use("/users/login", (req, res, next) => {
+  console.log(`${req.method} request for '${req.url}'`);
+  next();
+});
 
 // Post request
 app.post("/destinations", async (req, res) => {
@@ -87,9 +87,9 @@ app.post("/users/login", async (req, res) => {
         console.log("token", token);
 
         res.status(200).json({
-            message: "Login successful",
-            token: token,
-          });
+          message: "Login successful",
+          token: token,
+        });
       } else {
         console.log("not cool");
       }
@@ -101,7 +101,6 @@ app.post("/users/login", async (req, res) => {
       console.log("the user is null");
       return res.status(404).json({ message: "User not found" });
     }
-    
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ error });

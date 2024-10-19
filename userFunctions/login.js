@@ -16,7 +16,9 @@ export async function loginUser(userObj) {
     const json = await response.json();
     console.log(json);
 
-    sessionStorage.setItem("validToken", json.token)
+    if (json.token) {
+      sessionStorage.setItem("validToken", json.token);
+    }
     return json;
   } catch (error) {
     // console.error(error);
@@ -28,7 +30,12 @@ loginUserButton.addEventListener("click", async (e) => {
   e.preventDefault();
   const userObj = {
     email: email.value,
-    password: password.value
-};
-  loginUser(userObj)
+    password: password.value,
+  };
+  const loginResponse = await loginUser(userObj);
+  if (loginResponse && loginResponse.token) {
+    window.location.href = "/";
+  } else {
+    alert("Login failed. Please check your credentials.");
+  }
 });

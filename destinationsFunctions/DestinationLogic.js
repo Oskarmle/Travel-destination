@@ -27,7 +27,7 @@ window.addEventListener("load", async () => {
     }
     allFilteredDestinations = allDestinations;
     console.log(allFilteredDestinations);
-    
+
     allDestinations.forEach((destination) => {
       if (!allCountries.includes(destination.country)) {
         allCountries.push(destination.country);
@@ -42,12 +42,14 @@ window.addEventListener("load", async () => {
       clone.querySelector(".dateStart").textContent = destination.dateStart;
       clone.querySelector(".dateEnd").textContent = destination.dateEnd;
       clone.querySelector(".description").textContent = destination.description;
-      clone.querySelector(".edit").addEventListener("click", function(){
-        const editButton = document.getElementById("editDestinationButton")
-        editButton.classList.remove("invisible")
-        editButton.classList.add("showButton")
-        document.getElementById("addDestination").classList.remove("showButton")
-        document.getElementById("addDestination").classList.add("invisible")
+      clone.querySelector(".edit").addEventListener("click", function () {
+        const editButton = document.getElementById("editDestinationButton");
+        editButton.classList.remove("invisible");
+        editButton.classList.add("showButton");
+        document
+          .getElementById("addDestination")
+          .classList.remove("showButton");
+        document.getElementById("addDestination").classList.add("invisible");
 
         // Display data in form
         let title = document.getElementById("title");
@@ -57,16 +59,16 @@ window.addEventListener("load", async () => {
         let dateEnd = document.getElementById("dateEnd");
         let description = document.getElementById("description");
 
-        title.value = destination.title
-        city.value = destination.city
-        country.value = destination.country
-        dateStart.value = destination.dateStart
-        dateEnd.value = destination.dateEnd
-        description.value = destination.description
+        title.value = destination.title;
+        city.value = destination.city;
+        country.value = destination.country;
+        dateStart.value = destination.dateStart;
+        dateEnd.value = destination.dateEnd;
+        description.value = destination.description;
 
-        editButton.addEventListener("click", async function(e){
+        editButton.addEventListener("click", async function (e) {
           e.preventDefault();
-          
+
           const newTitle = title.value;
           const newCity = city.value;
           const newCountry = country.value;
@@ -81,14 +83,16 @@ window.addEventListener("load", async () => {
             newDateEnd,
             newDescription
           );
-          console.log("From destinationLogic file",updatedDestination);
-          
-          const result = await editDestination(destination._id, allFilteredDestinations, updatedDestination);
-          console.log("result", result);
-          
-        })
+          console.log("From destinationLogic file", updatedDestination);
 
-      })
+          const result = await editDestination(
+            destination._id,
+            allFilteredDestinations,
+            updatedDestination
+          );
+          console.log("result", result);
+        });
+      });
       if (token !== null && token !== undefined && token !== "") {
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
