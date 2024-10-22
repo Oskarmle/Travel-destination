@@ -1,0 +1,34 @@
+services:
+  frontend:
+    build:
+      context: .  # Build from the root directory
+      dockerfile: Dockerfile  # Refers to the frontend Dockerfile in the root
+    ports:
+      - "3000:3000"  # If using live-server (Option 1)
+    volumes:
+      - .:/app  # Mount the frontend folder so changes are reflected in real-time
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # Polling is needed in some environments (like Docker on Windows)
+
+  backend:
+    build:
+      context: ./backend  # The backend Dockerfile is in the "backend" folder
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"  # Map the backend port
+    volumes:
+      - ./backend:/app  # Mount the backend folder
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/mydatabase  # Example: Add your MongoDB connection string
+    depends_on:
+      - mongo  # Ensure MongoDB starts before the backend
+
+  mongo:
+    image: mongo:latest  # Use the official MongoDB image
+    ports:
+      - "27017:27017"  # Expose MongoDB port for connections
+    volumes:
+      - mongo_data:/data/db  # Persist MongoDB data
+
+volumes:
+  mongo_data:  # Named volume for MongoDB persistence
