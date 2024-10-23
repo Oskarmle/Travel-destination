@@ -4,11 +4,11 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const Destination = require("../schemas/Destination.js");
-const User = require("../schemas/User.js");
+const Destination = require("./schemas/Destination.js");
+const User = require("./schemas/User.js");
 // const LoginUser = require("../schemas/LoginUser.js");
 
-mongoose.connect("mongodb://127.0.0.1:27017/travel");
+mongoose.connect("mongodb://mongo:27017/travel");
 
 dotenv.config();
 
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //Set up a connection to MongoDB
-const uri = "mongodb://localhost:27017";
+const uri = "mongodb://mongo:27017/travel";  
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,

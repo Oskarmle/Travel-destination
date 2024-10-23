@@ -6,7 +6,7 @@ export async function editDestination(
   updatedDestination
 ) {
 
-  const url = `http://127.0.0.1:3003/destinations/${id}`;
+  const url = `http://backend:3003/destinations/${id}`;
   console.log("URL", url);
   try {
     const response = await fetch(url, {
