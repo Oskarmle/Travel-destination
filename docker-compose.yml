@@ -1,25 +1,37 @@
 services:
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: ./frontend  # The frontend Dockerfile is in the "frontend" folder
+      dockerfile: Dockerfile  # Dockerfile for frontend inside "frontend" folder
     ports:
-      - "3000:80"
+      - "3000:80"  # Serve frontend on port 3000
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app  # Mount the frontend folder for real-time updates
     environment:
-      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_USEPOLLING=true  # Needed in some Docker setups for file watching
     depends_on:
-      - backend
+      - backend  # Wait for the backend to start before launching the frontend
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ./backend  # The backend Dockerfile is in the "backend" folder
+      dockerfile: Dockerfile  # Dockerfile for backend inside "backend" folder
     ports:
-      - "3003:3003"
+      - "3003:3003"  # Expose backend on port 3003
     volumes:
-      - ./backend:/app
+      - ./backend:/app  # Mount the backend folder for real-time updates
     environment:
-      - MONGO_URL=mongodb://host.docker.internal:27017/travel  # Connect to local MongoDB
-      - JWT_SECRET=your_jwt_secret_here
+      - MONGO_URL=mongodb://mongo:27017/travel  # MongoDB connection string
+      - JWT_SECRET=your_jwt_secret_here  # JWT secret for your backend
+    depends_on:
+      - mongo  # Wait for MongoDB to start before launching the backend
+
+  mongo:
+    image: mongo:latest  # Use the latest official MongoDB image
+    ports:
+     - "27017:27017"  # Expose MongoDB on the default port
+    volumes:
+     - mongo_data:/data/db  # Persist MongoDB data in a volume
+
+volumes:
+  mongo_data:  # Named volume for MongoDB data persistence
