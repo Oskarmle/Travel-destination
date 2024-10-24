@@ -1,6 +1,49 @@
 # Travel Destinations Application 🌍✨🛫
 
-This is a web application built with Node.js, Express, Mongoose, and MongoDB. It allows users to create, edit, view, filter, and delete travel destinations. Users must be logged in to delete destinations.
+This is a web application built with Node.js, Express, Mongoose, and MongoDB and Docker. It allows users to create, edit, view, filter, and delete travel destinations. Users must be logged in to delete destinations.
+
+## How to run the application using Docker
+
+### Follow these steps</br>
+
+1.Clone the repository:
+
+```bash
+git clone https://github.com/Oskarmle/Travel-destination.git
+cd Travel-destination
+```
+
+2.Make sure that you remove node_modules in the root folder:
+
+3.Install node_modules in the backend folder:
+
+```bash
+npm install
+```
+
+4.Build the Docker Containers:
+
+```bash
+docker-compose --build
+```
+
+5.Run the Docker Containers:
+
+```bash
+docker-compose up
+```
+
+The frontend will run on http://localhost:3000.
+
+The backend will run on http://localhost:3003.
+
+Mongo will run on http://localhost:27017.
+
+6.Stop the Docker Containers:
+
+```bash
+docker-compose down
+```
 
 ## Figma Design
 
