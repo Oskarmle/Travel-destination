@@ -1,37 +1,25 @@
 services:
   frontend:
     build:
-      context: ./frontend  # The frontend Dockerfile is in the "frontend" folder
-      dockerfile: Dockerfile  # Dockerfile for frontend inside "frontend" folder
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "3000:80"  # Serve frontend on port 3000
+      - "3000:80"
     volumes:
-      - ./frontend:/app  # Mount the frontend folder for real-time updates
+      - ./frontend:/app
     environment:
-      - CHOKIDAR_USEPOLLING=true  # Needed in some Docker setups for file watching
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
-      - backend  # Wait for the backend to start before launching the frontend
+      - backend
 
   backend:
     build:
-      context: ./backend  # The backend Dockerfile is in the "backend" folder
-      dockerfile: Dockerfile  # Dockerfile for backend inside "backend" folder
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "3003:3003"  # Expose backend on port 3003
+      - "3003:3003"
     volumes:
-      - ./backend:/app  # Mount the backend folder for real-time updates
+      - ./backend:/app
     environment:
-      - MONGO_URL=mongodb://mongo:27017/travel  # MongoDB connection string
-      - JWT_SECRET=your_jwt_secret_here  # JWT secret for your backend
-    depends_on:
-      - mongo  # Wait for MongoDB to start before launching the backend
-
-  mongo:
-    image: mongo:latest  # Use the latest official MongoDB image
-    ports:
-     - "27017:27017"  # Expose MongoDB on the default port
-    volumes:
-     - mongo_data:/data/db  # Persist MongoDB data in a volume
-
-volumes:
-  mongo_data:  # Named volume for MongoDB data persistence
+      - MONGO_URL=mongodb://host.docker.internal:27017/travel  # Connect to local MongoDB
+      - JWT_SECRET=your_jwt_secret_here

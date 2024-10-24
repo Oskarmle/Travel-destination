@@ -1,5 +1,5 @@
 export async function getData() {
-  const url = "/api/destinations";
+  const url = "http://127.0.0.1:3003/destinations";
   try {
     const response = await fetch(url, {
       method: "GET",
