@@ -16,7 +16,8 @@ export async function saveDestination(destination1, allFilteredDestinations) {
     allFilteredDestinations.push(destination1);
   }
 
-  const url = "http://backend:3003/destinations";
+  const url = "http://localhost:3003/destinations";
+
   try {
     const response = await fetch(url, {
       method: "POST",

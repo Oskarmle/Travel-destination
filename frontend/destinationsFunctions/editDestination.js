@@ -5,8 +5,8 @@ export async function editDestination(
   allFilteredDestinations,
   updatedDestination
 ) {
+  const url = `http://localhost:3003/destinations/${id}`;
 
-  const url = `http://backend:3003/destinations/${id}`;
   console.log("URL", url);
   try {
     const response = await fetch(url, {

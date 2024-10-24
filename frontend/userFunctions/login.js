@@ -3,7 +3,8 @@ let password = document.getElementById("loginPassword");
 const loginUserButton = document.getElementById("loginButton");
 
 export async function loginUser(userObj) {
-  const url = "http://backend:3003/users/login";
+  const url = "http://localhost:3003/users/login";
+
   try {
     const response = await fetch(url, {
       method: "POST",

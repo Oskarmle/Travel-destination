@@ -1,37 +1,37 @@
 services:
   frontend:
     build:
-      context: ./frontend  # The frontend Dockerfile is in the "frontend" folder
-      dockerfile: Dockerfile  # Dockerfile for frontend inside "frontend" folder
+      context: ./frontend # The frontend Dockerfile is in the "frontend" folder
+      dockerfile: Dockerfile # Dockerfile for frontend inside "frontend" folder
     ports:
-      - "3000:80"  # Serve frontend on port 3000
+      - "3000:80" # Serve frontend on port 3000
     volumes:
-      - ./frontend:/app  # Mount the frontend folder for real-time updates
+      - ./frontend:/app # Mount the frontend folder for real-time updates
     environment:
-      - CHOKIDAR_USEPOLLING=true  # Needed in some Docker setups for file watching
+      - CHOKIDAR_USEPOLLING=true # Needed in some Docker setups for file watching
     depends_on:
-      - backend  # Wait for the backend to start before launching the frontend
+      - backend # Wait for the backend to start before launching the frontend
 
   backend:
     build:
-      context: ./backend  # The backend Dockerfile is in the "backend" folder
-      dockerfile: Dockerfile  # Dockerfile for backend inside "backend" folder
+      context: ./backend # The backend Dockerfile is in the "backend" folder
+      dockerfile: Dockerfile # Dockerfile for backend inside "backend" folder
     ports:
-      - "3003:3003"  # Expose backend on port 3003
+      - "3003:3003" # Expose backend on port 3003
     volumes:
-      - ./backend:/app  # Mount the backend folder for real-time updates
+      - ./backend:/app # Mount the backend folder for real-time updates
     environment:
-      - MONGO_URL=mongodb://mongo:27017/travel  # MongoDB connection string
-      - JWT_SECRET=your_jwt_secret_here  # JWT secret for your backend
+      - MONGO_URL=mongodb://mongo:27017/travel # MongoDB connection string
+      - JWT_SECRET=${jwt_secret} # Use the env variable from .env file
     depends_on:
-      - mongo  # Wait for MongoDB to start before launching the backend
+      - mongo # Wait for MongoDB to start before launching the backend
 
   mongo:
-    image: mongo:latest  # Use the latest official MongoDB image
+    image: mongo:latest # Use the latest official MongoDB image
     ports:
-     - "27017:27017"  # Expose MongoDB on the default port
+      - "27017:27017" # Expose MongoDB on the default port
     volumes:
-     - mongo_data:/data/db  # Persist MongoDB data in a volume
+      - mongo_data:/data/db # Persist MongoDB data in a volume
 
 volumes:
-  mongo_data:  # Named volume for MongoDB data persistence
+  mongo_data: # Named volume for MongoDB data persistence
