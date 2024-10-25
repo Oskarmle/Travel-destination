@@ -22,7 +22,7 @@ services:
       - ./backend:/app # Mount the backend folder for real-time updates
     environment:
       - MONGO_URL=mongodb://mongo:27017/travel # MongoDB connection string
-      - JWT_SECRET=${jwt_secret} # Use the env variable from .env file
+      - jwt_secret=${jwt_secret} # Use the env variable from .env file
     depends_on:
       - mongo # Wait for MongoDB to start before launching the backend
 
